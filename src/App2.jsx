@@ -4,8 +4,8 @@ import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Plane, Preload, useGLTF } from '@react-three/drei'
 import { Leva, useControls } from 'leva'
 
-import Crate from '../public/crate/Crate'
-import Platform from '../public/robo/Robo'
+import Crate from '/public/crate/Crate'
+import Platform from '/public/robo/Robo'
 
 function App2() {
   // Using Leva to control the position, scale, and rotation of the Crate and Platform
