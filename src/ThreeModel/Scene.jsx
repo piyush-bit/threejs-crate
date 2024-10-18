@@ -1,27 +1,29 @@
 import React, { useEffect, useRef } from 'react';
 import { useGLTF } from '@react-three/drei';
-import * as THREE from 'three'; // Ensure THREE is imported
+import * as THREE from 'three';
 
-export default function Model({ color = '#ffffff', opacity = 1, transparent = false, ...props }) {
+export default function Crate({ color = '#ffffff', opacity = 1, transparent = false, ...props }) {
   const { nodes, materials } = useGLTF('/crate/scene.gltf');
   const meshRef = useRef();
+  const materialRef = useRef();
 
   useEffect(() => {
-    // Debugging: Log materials and nodes to ensure they are correctly loaded
-    console.log('Materials:', materials);
-    console.log('Nodes:', nodes);
+    if (nodes && materials) {
+      // Create a new material instance for this crate
+      materialRef.current = materials.box_00_material.clone();
+      
+      // Set properties on the new material instance
+      materialRef.current.color = new THREE.Color(color);
+      materialRef.current.transparent = transparent;
+      materialRef.current.opacity = opacity;
+      materialRef.current.needsUpdate = true;
 
-    // Check if the material exists and set its properties dynamically
-    if (materials && materials.box_00_material) {
-      // Set color dynamically
-      materials.box_00_material.color = new THREE.Color(color);
-      materials.box_00_material.needsUpdate = true;
-
-      // Set transparency and opacity
-      materials.box_00_material.transparent = transparent;
-      materials.box_00_material.opacity = opacity;
+      // Apply the new material to the mesh
+      if (meshRef.current) {
+        meshRef.current.material = materialRef.current;
+      }
     }
-  }, [color, opacity, transparent, materials]); // Update when color, opacity, or transparency changes
+  }, [color, opacity, transparent, nodes, materials]);
 
   return (
     <group {...props} dispose={null}>
@@ -29,7 +31,6 @@ export default function Model({ color = '#ffffff', opacity = 1, transparent = fa
         <mesh
           ref={meshRef}
           geometry={nodes.box_00_box_00_material_0.geometry}
-          material={materials.box_00_material}
           rotation={[-Math.PI, 0, 0]}
         />
       </group>
@@ -38,4 +39,3 @@ export default function Model({ color = '#ffffff', opacity = 1, transparent = fa
 }
 
 useGLTF.preload('/crate/scene.gltf');
-
