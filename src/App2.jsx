@@ -60,9 +60,9 @@ function App2() {
                 <Crate
                   key={index}
                   position={[
-                    position.start.x * 0.24,
-                    position.start.y * 0.24,
-                    position.start.z * 0.32,
+                    (position.start.x-1) * 0.24,
+                    (position.start.y-1) * 0.24,
+                    (position.start.z-1) * 0.32,
                   ]}
                   scale={[
                     (position.end.x - position.start.x) * 0.4,
@@ -81,9 +81,9 @@ function App2() {
               <Crate
                 key={index}
                 position={[
-                  position.start.x * 0.24,
-                  position.start.y * 0.24,
-                  position.start.z * 0.32,
+                  (position.start.x-1) * 0.24,
+                  (position.start.y-1) * 0.24,
+                  (position.start.z-1) * 0.32,
                 ]}
                 scale={[
                   (position.end.x - position.start.x) * 0.4,
