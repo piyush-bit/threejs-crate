@@ -68,7 +68,9 @@ function App2() {
                 key={index} 
                 position={[position.start.x*0.24, position.start.y*0.24, position.start.z*0.32]} 
                 scale={[(position.end.x - position.start.x) * 0.4,(position.end.y - position.start.y)*0.4,(position.end.z - position.start.z)*0.4]} 
-                rotation={[0,0,0]} 
+                rotation={[0,0,0]}
+                transparent={true}
+                opacity={0.7}
                 color={"#eb3017"} />
 
               }
@@ -77,7 +79,9 @@ function App2() {
                 key={index} 
                 position={[position.start.x*0.24, position.start.y*0.24, position.start.z*0.32]} 
                 scale={[(position.end.x - position.start.x) * 0.4,(position.end.y - position.start.y)*0.4,(position.end.z - position.start.z)*0.4]} 
-                rotation={[0,0,0]} 
+                rotation={[0,0,0]}
+                transparent={true}
+                opacity={position.placed ? 1 : 0.3}
                 color={position.color} />
             })
           }
