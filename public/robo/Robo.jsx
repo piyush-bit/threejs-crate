@@ -7,7 +7,7 @@ import React from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export default function Model(props) {
-  const { nodes, materials } = useGLTF('/public/robo/robo.gltf')
+  const { nodes, materials } = useGLTF('/robo/robo.gltf')
   return (
     <group {...props} dispose={null}>
       <mesh geometry={nodes.obj1.geometry} material={materials['Material.002']} rotation={[Math.PI / 2, 0, 0]} scale={0.001} />
@@ -30,4 +30,4 @@ export default function Model(props) {
   )
 }
 
-useGLTF.preload('/robo.gltf')
+useGLTF.preload('/robo/robo.gltf')

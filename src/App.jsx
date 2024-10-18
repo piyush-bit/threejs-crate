@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
-import Crate from '/public/crate/Crate';
+// import Crate from '/public/crate/Crate';
 
 function App() {
   const [crates, setCrates] = useState([]);

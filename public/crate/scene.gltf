@@ -3,95 +3,62 @@
     {
       "bufferView": 2,
       "componentType": 5126,
-      "count": 216,
+      "count": 96,
       "max": [
-        0.6499999761581421,
-        0.6499999761581421,
-        0.6499999761581421
+        50.0,
+        66.66666412353516,
+        100.0
       ],
       "min": [
-        -0.6499999761581421,
-        -0.6499999761581421,
-        -0.6499999761581421
+        -50.0,
+        -66.66666412353516,
+        -7.105427357601002e-15
       ],
       "type": "VEC3"
     },
     {
       "bufferView": 2,
-      "byteOffset": 2592,
+      "byteOffset": 1152,
       "componentType": 5126,
-      "count": 216,
+      "count": 96,
       "max": [
-        1.0,
-        1.0,
-        1.0
+        0.9999843835830688,
+        0.999984622001648,
+        0.9999843835830688
       ],
       "min": [
-        -1.0,
-        -1.0,
-        -1.0
+        -0.999984622001648,
+        -0.9999843835830688,
+        -0.999984622001648
       ],
       "type": "VEC3"
     },
     {
-      "bufferView": 3,
-      "componentType": 5126,
-      "count": 216,
-      "max": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "min": [
-        -1.0,
-        -1.0,
-        -1.0,
-        1.0
-      ],
-      "type": "VEC4"
-    },
-    {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 216,
+      "count": 96,
       "max": [
-        0.9900000095367432,
-        0.9900000095367432
+        0.99755859375,
+        0.8472900390625
       ],
       "min": [
-        0.009999999776482582,
-        0.060455262660980225
+        0.00199127197265625,
+        0.001953125
       ],
       "type": "VEC2"
     },
     {
       "bufferView": 1,
-      "byteOffset": 1728,
+      "byteOffset": 768,
       "componentType": 5126,
-      "count": 216,
+      "count": 96,
       "max": [
-        0.9900000095367432,
-        0.9900000095367432
+        0.99755859375,
+        0.8472900390625
       ],
       "min": [
-        0.009999999776482582,
-        0.060455262660980225
-      ],
-      "type": "VEC2"
-    },
-    {
-      "bufferView": 1,
-      "byteOffset": 3456,
-      "componentType": 5126,
-      "count": 216,
-      "max": [
-        0.9900000095367432,
-        0.9900000095367432
-      ],
-      "min": [
-        0.009999999776482582,
-        0.060455262660980225
+        0.00199127197265625,
+        0.001953125
       ],
       "type": "VEC2"
     },
@@ -104,12 +71,12 @@
   ],
   "asset": {
     "extras": {
-      "author": "DJMaesen (https://sketchfab.com/bumstrum)",
+      "author": "sharpened (https://sketchfab.com/sharpened)",
       "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
-      "source": "https://sketchfab.com/3d-models/crate-3990cc9d604d4030a84b713db2ad4242",
-      "title": "Crate"
+      "source": "https://sketchfab.com/3d-models/closed-cardboard-box-free-download-c023cd16986445d880871174d7fe8623",
+      "title": "Closed Cardboard Box (Free Download)"
     },
-    "generator": "Sketchfab-12.71.0",
+    "generator": "Sketchfab-12.68.0",
     "version": "2.0"
   },
   "bufferViews": [
@@ -121,7 +88,7 @@
     },
     {
       "buffer": 0,
-      "byteLength": 5184,
+      "byteLength": 1536,
       "byteOffset": 1296,
       "byteStride": 8,
       "name": "floatBufferViews",
@@ -129,48 +96,36 @@
     },
     {
       "buffer": 0,
-      "byteLength": 5184,
-      "byteOffset": 6480,
+      "byteLength": 2304,
+      "byteOffset": 2832,
       "byteStride": 12,
-      "name": "floatBufferViews",
-      "target": 34962
-    },
-    {
-      "buffer": 0,
-      "byteLength": 3456,
-      "byteOffset": 11664,
-      "byteStride": 16,
       "name": "floatBufferViews",
       "target": 34962
     }
   ],
   "buffers": [
     {
-      "byteLength": 15120,
+      "byteLength": 5136,
       "uri": "scene.bin"
     }
   ],
   "images": [
     {
-      "uri": "textures/Crate_baseColor.png"
+      "uri": "textures/box_00_material_baseColor.png"
     },
     {
-      "uri": "textures/Crate_metallicRoughness.png"
-    },
-    {
-      "uri": "textures/Crate_normal.png"
+      "uri": "textures/box_00_material_metallicRoughness.png"
     }
   ],
   "materials": [
     {
-      "name": "Crate",
-      "normalTexture": {
-        "index": 2
-      },
+      "doubleSided": true,
+      "name": "box_00_material",
       "pbrMetallicRoughness": {
         "baseColorTexture": {
           "index": 0
         },
+        "metallicFactor": 0.0,
         "metallicRoughnessTexture": {
           "index": 1
         }
@@ -179,18 +134,16 @@
   ],
   "meshes": [
     {
-      "name": "crate_Crate_0",
+      "name": "box_00_box_00_material_0",
       "primitives": [
         {
           "attributes": {
             "NORMAL": 1,
             "POSITION": 0,
-            "TANGENT": 2,
-            "TEXCOORD_0": 3,
-            "TEXCOORD_1": 4,
-            "TEXCOORD_2": 5
+            "TEXCOORD_0": 2,
+            "TEXCOORD_1": 3
           },
-          "indices": 6,
+          "indices": 4,
           "material": 0,
           "mode": 4
         }
@@ -203,21 +156,21 @@
         1
       ],
       "matrix": [
-        1.0,
+        0.006207160651683807,
         0.0,
         0.0,
         0.0,
         0.0,
-        2.220446049250313e-16,
-        -1.0,
+        4.4879350339097774e-05,
+        0.006206998232392902,
         0.0,
         0.0,
-        1.0,
-        2.220446049250313e-16,
+        -0.006206998232392902,
+        4.4879350339097774e-05,
         0.0,
         0.0,
-        0.0,
-        0.0,
+        -99.99874114990234,
+        0.36150524020192787,
         1.0
       ],
       "name": "Sketchfab_model"
@@ -227,24 +180,24 @@
         2
       ],
       "matrix": [
-        0.009999999776482582,
+        1.0,
         0.0,
         0.0,
         0.0,
         0.0,
+        -1.0,
         0.0,
-        0.009999999776482582,
         0.0,
         0.0,
-        -0.009999999776482582,
         0.0,
+        -1.0,
         0.0,
         0.0,
         0.0,
         0.0,
         1.0
       ],
-      "name": "6f4350f7895149e086ea358dc225701b.fbx"
+      "name": "a1aa665e6c03400ba350d3c76eb5423a.fbx"
     },
     {
       "children": [
@@ -256,29 +209,11 @@
       "children": [
         4
       ],
-      "matrix": [
-        100.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        -4.371139006309477e-06,
-        -99.9999999999999,
-        0.0,
-        0.0,
-        99.9999999999999,
-        -4.371139006309477e-06,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0
-      ],
-      "name": "crate"
+      "name": "box_00"
     },
     {
       "mesh": 0,
-      "name": "crate_Crate_0"
+      "name": "box_00_box_00_material_0"
     }
   ],
   "samplers": [
@@ -306,10 +241,6 @@
     {
       "sampler": 0,
       "source": 1
-    },
-    {
-      "sampler": 0,
-      "source": 2
     }
   ]
 }
