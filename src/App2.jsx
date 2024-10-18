@@ -7,7 +7,7 @@ import { Leva, useControls } from "leva";
 // import Crate from '/public/crate/Crate'
 import Crate from "./ThreeModel/Scene";
 import Platform from "./ThreeModel/Robo";
-import { div } from "three/webgpu";
+import Loader3D from "./Loader3D";
 
 function App2() {
   const [positions, setPositions] = useState();
@@ -30,6 +30,9 @@ function App2() {
     console.log(positions);
   }, [positions]);
 
+   // Fallback component for Suspense
+   
+
   return (
     <>
       {isHome && <JsonBuilder setPositions={setPositions} />}
@@ -47,7 +50,7 @@ function App2() {
         <directionalLight intensity={1} position={[-3, 2, 4]} />
         <hemisphereLight intensity={0.5} />
         <OrbitControls />
-        <Suspense fallback={null}>
+        <Suspense fallback={<Loader3D/>}>
           <Platform
             position={[0, -0.72, -0.1]}
             scale={1}
