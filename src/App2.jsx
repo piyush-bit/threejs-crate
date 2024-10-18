@@ -1,4 +1,4 @@
-import { useState, Suspense } from 'react'
+import { useState, Suspense, useEffect } from 'react'
 import './App.css'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Plane, Preload, useGLTF } from '@react-three/drei'
@@ -7,55 +7,41 @@ import { Leva, useControls } from 'leva'
 // import Crate from '/public/crate/Crate'
 import Crate from './ThreeModel/Scene'
 import Platform from './ThreeModel/Robo'
+import { div } from 'three/webgpu'
 
 function App2() {
-  // Using Leva to control the position, scale, rotation, and color of the Crate and Platform
-  const { cratePosition, crateScale, crateRotation, platformPosition, platformScale, platformRotation, showCrate, crateColor } = useControls({
-    cratePosition: { value: [0.12, 0.12, 0.16], step: 0.001 },
-    crateScale: { value: 0.3, step: 0.01 },
-    crateRotation: { value: [0, 0, 0], step: 0.1 },
-    platformPosition: { value: [0, -0.72, -0.10], step: 0.01 },
-    platformScale: { value: 1, step: 0.01 },
-    platformRotation: { value: [0, 0, 0], step: 0.1 },
-    showCrate: { value: true },
-    crateColor: { value: '#ff00ff' }, // New color control for the Crate
-  })
 
-  const position = [
-    {
-      start: {
-        x: 0,
-        y: 0,
-        z: 0
-      },
-      end: {
-        x: 1,
-        y: 1,
-        z: 1
-      },
-      placed: true
-    },
-    {
-      start: {
-        x: -1,
-        y: -1,
-        z: -1
-      },
-      end: {
-        x: 2,
-        y: 0,
-        z: 0
-      },
-      placed: true
-    },
-   
-  ]
+  const [positions, setPositions] = useState()
+  const [isHome , setIsHome] = useState(true)
+
+  useEffect(() => {
+    // Decode on client side
+    let encodedDataFromUrl = new URLSearchParams(window.location.search).get('data');
+    try {
+      let decodedJson = JSON.parse(atob(encodedDataFromUrl));
+      console.log(decodedJson); // Use this data for rendering
+      setPositions(decodedJson)
+      setIsHome(false)
+    } catch (error) {
+      
+    }
+
+  }, [])
+
+
+  useEffect(()=>{
+    console.log(positions)
+  },[positions])
+
+
   
   
   return (
     <>
-      {/* Leva panel for on-screen controls */}
-      <Leva collapsed={false} />
+      
+      {
+        isHome && <JsonBuilder setPositions={setPositions}/>
+      }
 
       <Canvas style={{ width: '100vw', height: '100vh' }} camera={{ position: [-2,1,4] , fov : 45 } }>
         {/* <ambientLight intensity={1} /> */}
@@ -68,33 +54,22 @@ function App2() {
         <hemisphereLight intensity={0.5} />
         <OrbitControls />
         <Suspense fallback={null}>
-          {/* Platform controlled via Leva */}
+
           <Platform
-            position={platformPosition}
-            scale={platformScale}
-            rotation={platformRotation}
+            position={[0, -0.72, -0.10]}
+            scale={1}
+            rotation={[0,0,0]}
           />
 
-          {/* 3x3x3 crate grid controlled via Leva */}
-          {/* {showCrate && [-1, 0, 1].map(x => (
-            [-1, 0, 1].map(y => (
-              [-1, 0, 1].map(z => (
-                <Crate
-                  color={crateColor} // Passing the color from Leva
-                  key={`${x},${y},${z}`}
-                  position={[x * 0.24, y * 0.24, z * 0.32]}
-                  scale={0.4}
-                  rotation={[0, 0, 0]}
-                />
-              ))
-            ))
-          ))} */}
-
-         
-
           {
-            position.map((position,index)=>{
-                return <Crate key={index} position={[position.start.x*0.24, position.start.y*0.24, position.start.z*0.32]} scale={[(position.end.x - position.start.x) * 0.4,(position.end.y - position.start.y)*0.4,(position.end.z - position.start.z)*0.4]} rotation={crateRotation} opacity={position.placed?0.5:1} color={position.color} />
+            positions?.map((position,index)=>{
+
+                return <Crate 
+                key={index} 
+                position={[position.start.x*0.24, position.start.y*0.24, position.start.z*0.32]} 
+                scale={[(position.end.x - position.start.x) * 0.4,(position.end.y - position.start.y)*0.4,(position.end.z - position.start.z)*0.4]} 
+                rotation={[0,0,0]} 
+                color={position.color} />
             })
           }
         </Suspense>
@@ -102,5 +77,113 @@ function App2() {
     </>
   )
 }
+
+export function JsonBuilder({setPositions}) {
+  const [jsonInput, setJsonInput] = useState('');
+  const [isValid, setIsValid] = useState(true);
+  const [encodedData, setEncodedData] = useState('');
+
+  // Function to check if the JSON contains valid start/end with x, y, z fields
+  const validateJson = (json) => {
+    try {
+      const parsed = JSON.parse(json);
+      
+      // Ensure it's an array and each element has valid start and end with x, y, z
+      if (Array.isArray(parsed)) {
+        for (const item of parsed) {
+          if (
+            item.start && item.end &&
+            'x' in item.start && 'y' in item.start && 'z' in item.start &&
+            'x' in item.end && 'y' in item.end && 'z' in item.end
+          ) {
+            continue;
+          } else {
+            return false;
+          }
+        }
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  };
+
+  // Handler when JSON input changes
+  const handleJsonChange = (e) => {
+    const input = e.target.value;
+    setJsonInput(input);
+    setIsValid(validateJson(input));
+  };
+
+  // Function to handle inserting tab character in textarea
+  const handleKeyDown = (e) => {
+    if (e.key === 'Tab') {
+      e.preventDefault(); // Prevent the default tab behavior
+
+      const textarea = e.target;
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+
+      // Insert a tab character at the cursor position
+      const newValue = jsonInput.substring(0, start) + '\t' + jsonInput.substring(end);
+      setJsonInput(newValue);
+
+      // Move the cursor to the right place after inserting the tab
+      setTimeout(() => {
+        textarea.selectionStart = textarea.selectionEnd = start + 1;
+      }, 0);
+    }
+  };
+
+  // Function to encode the valid JSON as Base64
+  const handleEncode = () => {
+    if (isValid) {
+      const encoded = btoa(jsonInput);
+      setEncodedData(encoded);
+      setPositions(JSON.parse(jsonInput));
+
+    }
+  };
+
+  return (
+    <div style={{ padding: '20px', fontFamily: 'Arial' , position : 'absolute' , zIndex : "100" }}>
+      <h3>JSON Input</h3>
+      <textarea
+        rows="10"
+        cols="50"
+        value={jsonInput}
+        onChange={handleJsonChange}
+        onKeyDown={handleKeyDown}
+        placeholder='Enter JSON here...'
+        style={{ borderColor: isValid ? 'black' : 'red', padding: '10px', width: '100%' }}
+      />
+      {!isValid && <p style={{ color: 'red' }}>Invalid JSON or missing start/end with x, y, z fields!</p>}
+
+      <button
+        onClick={handleEncode}
+        disabled={!isValid}
+        style={{ marginTop: '10px', padding: '10px 20px', cursor: isValid ? 'pointer' : 'not-allowed' }}
+      >
+        Encode to Base64
+      </button>
+
+      {encodedData && (
+        <div style={{ marginTop: '20px' }}>
+          <h3>Encoded Base64 Output:</h3>
+          <textarea
+            rows="5"
+            cols="50"
+            readOnly
+            value={`${window.location.origin}?data=${encodedData}`}
+            style={{ padding: '10px', width: '100%' }}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
 
 export default App2
