@@ -63,9 +63,9 @@
                   <Crate
                     key={index}
                     position={[
-                      (position.start.x-1) * 0.24,
+                      (position.start.x-1) * 0.24 + ((position.end.x - position.start.x-1) * 0.12),
                       (position.start.y-1) * 0.24,
-                      (position.start.z-1) * 0.32,
+                      (position.start.z-1) * 0.32+ ((position.end.z - position.start.z -1) * 0.16),
                     ]}
                     scale={[
                       (position.end.x - position.start.x) * 0.4,
