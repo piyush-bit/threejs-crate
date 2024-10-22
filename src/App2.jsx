@@ -74,7 +74,7 @@
                     ]}
                     rotation={[0, 0, 0]}
                     transparent={true}
-                    opacity={0.7}
+                    opacity={position.opacity ? position.opacity:0.7}
                     color={"#eb3017"}
                   />
                 );
@@ -95,7 +95,7 @@
                   ]}
                   rotation={[0, 0, 0]}
                   transparent={true}
-                  opacity={position.placed ? 1 : 0.3}
+                  opacity={position.opacity? position.opacity :position.placed ? 1 : 0.3}
                   color={position.color}
                 />
               );
